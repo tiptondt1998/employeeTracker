@@ -1,6 +1,30 @@
 const fs = require('fs');
 const inquirer = require('inquirer');
+const sqlite3 = require('sqlite3').verbose();
 
+const db = new sqlite3.Database('./db/employee.db', err => {
+    if (err) {
+      return console.error(err.message);
+    }
+  
+    console.log('Connected to the employee database.');
+  });
+
+function createDB(firstName, lastName, role, manager){
+    
+    }
+    
+    function readDB(){
+    
+    }
+    
+    function updateDB(){
+    
+    }
+    
+    function deleteDB(){
+    
+    }
 
 function employeeTracker(){
 
@@ -41,11 +65,24 @@ inquirer.prompt([
                 type: 'input',
                 name: 'lastName',
                 message: 'Enter last name: '
+            },
+            {
+                type: 'input',
+                name: 'role',
+                message: 'Enter role: '
+            },
+            {
+                type:'input',
+                name:'manager',
+                message:'Enter manager name: '
             }
-            ]);
+            ]).then(addEmployeeAnswers => {
+                createDB(addEmployeeAnswers.firstName, addEmployeeAnswers.lastName, addEmployeeAnswers.role, addEmployeeAnswers.manager);
+            });
         break;
         case 'Update employee info': console.log('Fetching');
     }
 })
 }
+
 employeeTracker();
