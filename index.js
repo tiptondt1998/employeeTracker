@@ -3,6 +3,21 @@ const inquirer = require('inquirer');
 
 
 function employeeTracker(){
+
+    console.log(
+        '#######                                                    #######');                                           
+    console.log(
+        '#       #    # #####  #       ####  #   # ###### ######       #    #####    ##    ####  #    # ###### #####');
+    console.log(
+        '#       ##  ## #    # #      #    #  # #  #      #            #    #    #  #  #  #    # #   #  #      #    #');
+    console.log(
+        '#####   # ## # #    # #      #    #   #   #####  #####        #    #    # #    # #      ####   #####  #    #'); 
+    console.log(
+        '#       #    # #####  #      #    #   #   #      #            #    #####  ###### #      #  #   #      #####');
+    console.log(
+        '#       #    # #      #      #    #   #   #      #            #    #   #  #    # #    # #   #  #      #   #');  
+    console.log(
+        '####### #    # #      ######  ####    #   ###### ######       #    #    # #    #  ####  #    # ###### #    #' );
 inquirer.prompt([
 
     {
@@ -15,7 +30,19 @@ inquirer.prompt([
     switch(answers.choices){
         case 'View current employees': console.log("Insert sql chart here");
         break;
-        case 'Add employee': console.log('Execute sql transaction');
+        case 'Add employee':
+            inquirer.prompt([
+            {
+                type: 'input',
+                name: 'firstName',
+                message: 'Enter first name: '
+            },
+            {
+                type: 'input',
+                name: 'lastName',
+                message: 'Enter last name: '
+            }
+            ]);
         break;
         case 'Update employee info': console.log('Fetching');
     }
