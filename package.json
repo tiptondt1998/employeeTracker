@@ -6,8 +6,8 @@
   "scripts": {
     "test": "jest",
     "migrate": "sqlite3 db/employee.db < db/schema.sql",
-"seed": "sqlite3 db/employee.db < db/seeds.sql",
-"db": "sqlite3 db/employee.db",
+    "seed": "sqlite3 db/employee.db < db/seeds.sql",
+    "db": "sqlite3 db/employee.db",
     "start": "npm server.js"
   },
   "repository": {
@@ -20,5 +20,8 @@
   "bugs": {
     "url": "https://github.com/tiptondt1998/employeeTracker/issues"
   },
-  "homepage": "https://github.com/tiptondt1998/employeeTracker#readme"
+  "homepage": "https://github.com/tiptondt1998/employeeTracker#readme",
+  "dependencies": {
+    "mysql2": "^2.2.5"
+  }
 }
