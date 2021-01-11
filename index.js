@@ -63,13 +63,30 @@ function insertEmployee (firstName, lastName, role, manager) {
 };
 
     function readDB(){
-        const query = `SELECT * FROM employee`;
-        const rows = connection.query(query);
-        console.table(rows);
-    }
+        connection.query(
+            'SELECT * FROM employee', function(err,results,fields){
+                console.table(results);
+                console.table(fields);
+            }
+        );
+    };
     
-    function updateDB(){
-    
+    function updateDB(modify, newVal, employeeChoice){
+        const firstName = employeeChoice.split(' ')[0];
+        const lastName = employeeChoice.split(' ')[1];
+        const query = `UPDATE employee SET ${modify}=? WHERE first_name = ? AND last_name = ?`;
+        const args = [newVal, firstName, lastName];
+        const rows = connection.query(query, args, (error) => {
+            if(error){
+                console.log(error)
+                throw error
+            }
+            else{
+                console.log(`${firstName} ${lastName} updated`);
+                return rows;   
+            }
+            employeeTracker();
+        })
     }
     
     function deleteDB(){
@@ -133,7 +150,55 @@ inquirer.prompt([
                 employeeTracker();
             });
         break;
-        case 'Update employee info': console.log('Fetching');
+        case 'Update employee info': 
+            inquirer.prompt([
+                {
+                    type: 'input',
+                    name: 'employeeChoice',
+                    message: 'Enter employee first name and last name: '
+                },
+                {
+                    type: 'list',
+                    name: 'updateChoice',
+                    message: 'What do you need to update? ',
+                    choices: ['first_name', 'last_name', 'role']
+                }
+            ]).then(updateAnswers =>{
+                switch(updateAnswers.updateChoice){
+                    case 'first_name':
+                        inquirer.prompt([
+                            {
+                            type: 'input',
+                            name: 'newFName',
+                            message: 'Enter new first name: '
+                            }
+                        ]).then(newFname => {
+                            updateDB(updateAnswers.updateChoice, newFname.newFName,updateAnswers.employeeChoice);
+                        });
+                        break;
+                        case 'last_name':
+                            inquirer.prompt([
+                                {
+                                type: 'input',
+                                name: 'newLName',
+                                message: 'Enter new last name: '
+                                }
+                            ]).then(newLname => {
+                                updateDB(updateAnswers.updateChoice, newLname.newLName,updateAnswers.employeeChoice);
+                            });
+                            break;
+                            case 'role':
+                                inquirer.prompt([
+                                    {
+                                    type: 'input',
+                                    name: 'role',
+                                    message: 'Enter new role: '
+                                    }
+                                ]).then(newrole => {
+                                    updateDB(updateAnswers.updateChoice, newrole.role,updateAnswers.employeeChoice);
+                                });
+                }
+            })
     }
 })
 }
