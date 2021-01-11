@@ -17,14 +17,6 @@ connection.connect(function(err)
 
 })
 
-    // async function createDB(firstName, lastName, role, manager){
-    // const sql = `INSERT INTO employee (first_name, last_name, role_id, manager_id) 
-    //              VALUES (${firstName},${lastName},1,1)`;
-    // const create = connection.query(sql);
-    // return console.table(create);
-    // employeeTracker();
-    // }
-    
 function obtainRoleId(roleName){
     const query =  `SELECT id FROM role WHERE role.id = ?`;
     const args = [roleName];
@@ -71,7 +63,7 @@ function insertEmployee (firstName, lastName, role, manager) {
 };
 
     function readDB(){
-        const query = `SELECT (id, first_name, last_name) FROM employee`;
+        const query = `SELECT * FROM employee`;
         const rows = connection.query(query);
         console.table(rows);
     }
